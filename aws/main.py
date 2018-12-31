@@ -29,8 +29,7 @@ def run_event():
             # this loads the static trip data from a zipped csv
             # after the initial load there is no need to reload this
             # mainly here for either new trip data or moving data into another location, table, etc
-            trip_data = utils.files_from_zip("../../pentaho/divvy/divvy_data/Divvy_Trips_2016_Q3Q4.zip",
-                                   "Divvy_Trips_.*Divvy_Trips.*csv$")
+            trip_data = utils.files_from_zip("../data/Divvy_Trips_2016_Q3Q4.zip", "Divvy_Trips_.*Divvy_Trips.*csv$")
             utils.load_data('TripData', trip_data)
         elif cmd == 'l':
             # this loads current data about the stations pull from an http end point

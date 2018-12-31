@@ -1,6 +1,6 @@
 ## Divvy Analyze
 
-This is equivalent to the penatho example [here](https://github.com/j8mathis/samples/tree/master/pentaho/divvy) only in python. To summarize what this does: 
+This is equivalent to the penatho example [here](https://github.com/j8mathis/divvy_analyze/tree/master/pentaho) only in python. To summarize what this does: 
 
 * Get data from http end point
 * Pull data from compressed folder
