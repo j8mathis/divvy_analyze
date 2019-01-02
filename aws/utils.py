@@ -7,14 +7,21 @@ import re
 from trip_data_type import Trip
 import csv
 import io
-
+from datetime import datetime
 
 def get_live_data(url):
+    '''
+    This function pulls data from a http endpoint and loads each row into a dict and adds it to a list.
+    :param (string) url: http endpoint containing the data
+    :return: a list of dictionaries
+    '''
+
     resp = requests.get(url)
     resp.raise_for_status()
 
     live_data_raw = resp.json()
     live_data_list = live_data_raw.get('stationBeanList')
+    now = str(datetime.now().isoformat())
 
     station_data = []
     for station in live_data_list:
@@ -28,26 +35,32 @@ def get_live_data(url):
         station_dict['availableDocks'] = station.get('availableDocks', 0)
         station_dict['totalDocks'] = station.get('totalDocks', 0)
         station_dict['availableBikes'] = station.get('availableBikes', 0)
+        station_dict['load_datetime'] = now
 
         station_data.append(station_dict)
 
     return station_data
 
 
-def load_data(table, data):
+def put_item(table, dict_item):
+    '''
+    This function loads a single dictionary into dynamodb db.
+    :param (string) table:
+    :param (dict) dict_item:
+    :return: response from service
+    '''
     dynamodb = boto3.resource('dynamodb')
 
     table = dynamodb.Table(table)
-
-    with table.batch_writer() as batch:
-        for i in data:
-            batch.put_item(i)
-
+    response = table.put_item(Item=dict_item)
+    return response
 
 def files_from_zip(base_zipfile, reg_exp=None):
     '''
-    this function takes a zip file and optional reg_exp to produce a list of files which then get extracted in into
-    a list of dicts, ready to be loaded into the db
+    This function unzip an archive and create a dict for each row and adds it to a list
+    :param (string) base_zipfile: a zipfile containing csv files
+    :param (string) reg_exp: optional regex experession
+    :return: A list of dictionaries  
     '''
 
     with ZipFile(base_zipfile, 'r') as zip:
@@ -75,22 +88,25 @@ def files_from_zip(base_zipfile, reg_exp=None):
     return trips
 
 
-def create_tables():
-    # This doesn't have to live here or in the main but leaving it for now
+def create_table(**kwargs):
+    '''
+    This is s simple function that creates a table in dynamodb.
+    :param kwargs: table_name (string), partition_key (string)
+    '''
     dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
-
+    print(f"Creating {kwargs['table_name']}...")
     try:
-        tbl_station_data = dynamodb.create_table(
-            TableName='StationData',
+        table = dynamodb.create_table(
+            TableName=kwargs['table_name'],
             KeySchema=[
                 {
-                    'AttributeName': 'station_id',
+                    'AttributeName': kwargs['partition_key'],
                     'KeyType': 'HASH'  # Partition key
                 },
             ],
             AttributeDefinitions=[
                 {
-                    'AttributeName': 'station_id',
+                    'AttributeName': kwargs['partition_key'],
                     'AttributeType': 'N'
                 }
 
@@ -101,42 +117,11 @@ def create_tables():
             }
         )
 
-        tbl_station_data.meta.client.get_waiter('table_exists').wait(TableName='StationData')
-        print("StationData table status:", tbl_station_data.table_status)
+        table.wait_until_exists()
+        print(f"{kwargs['table_name']} table status:", table.table_status)
 
     except ClientError as e:
         if e.response['Error']['Code'] == "ResourceInUseException":
-            print('StationData table exists moving on...')
-        else:
-            raise e.response['Error']['Code']
-
-    try:
-        tbl_trip_data = dynamodb.create_table(
-            TableName='TripData',
-            KeySchema=[
-                {
-                    'AttributeName': 'trip_id',
-                    'KeyType': 'HASH'  # Partition key
-                },
-            ],
-            AttributeDefinitions=[
-                {
-                    'AttributeName': 'trip_id',
-                    'AttributeType': 'N'
-                }
-
-            ],
-            ProvisionedThroughput={
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
-            }
-        )
-
-        tbl_trip_data.meta.client.get_waiter('table_exists').wait(TableName='TripData')
-        print("TripData table status:", tbl_trip_data.table_status)
-
-    except ClientError as e:
-        if e.response['Error']['Code'] == "ResourceInUseException":
-            print('TripData table exists moving on...')
+            print(f"{kwargs['table_name']} table exists moving on...")
         else:
             raise e.response['Error']['Code']

@@ -1,11 +1,13 @@
+from datetime import datetime
+
 class Trip:
     '''
-    Neat way to build an object with data and then convert to a dict. Very nice to be able to control the data types
+    Trip data object used for creating dictionaries from CSV files
     '''
     def __init__(
             self, trip_id, starttime, stoptime, bikeid,
             tripduration, from_station_id, from_station_name, to_station_id, to_station_name,
-            usertype, gender, birthyear):
+            usertype, gender, birthyear, load_datetime):
         self.trip_id = trip_id
         self.starttime = starttime
         self.stoptime = stoptime
@@ -18,9 +20,16 @@ class Trip:
         self.usertype = usertype
         self.gender = gender
         self.birthyear = birthyear
+        self.load_datetime = load_datetime
 
     @staticmethod
     def create_from_dict(lookup):
+        '''
+        This function creates an object with data attributes below.
+        :param (dict) lookup:
+        :return: object with data attributes
+        '''
+        now = str(datetime.now().isoformat())
         return Trip(
             int(lookup['trip_id']),
             lookup['starttime'],
@@ -34,5 +43,7 @@ class Trip:
             lookup['usertype'],
             lookup['gender'],
             # leave the empty string I am stripping them out before the load
-            int(lookup['birthyear']) if lookup['birthyear'] else ''
+            int(lookup['birthyear']) if lookup['birthyear'] else '',
+            now
+
         )
