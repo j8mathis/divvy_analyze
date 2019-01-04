@@ -1,9 +1,13 @@
 from datetime import datetime
 
+
 class Trip:
-    '''
-    Trip data object used for creating dictionaries from CSV files
-    '''
+    """
+    Trip data object used for creating dictionaries from CSV files. This is maybe overkill here. .
+    I learned this in Michael Kennedy's awesome jumpstart course.
+    ref: https://github.com/mikeckennedy/python-jumpstart-course-demos
+    """
+
     def __init__(
             self, trip_id, starttime, stoptime, bikeid,
             tripduration, from_station_id, from_station_name, to_station_id, to_station_name,
@@ -24,11 +28,11 @@ class Trip:
 
     @staticmethod
     def create_from_dict(lookup):
-        '''
+        """
         This function creates an object with data attributes below.
         :param (dict) lookup:
         :return: object with data attributes
-        '''
+        """
         now = str(datetime.now().isoformat())
         return Trip(
             int(lookup['trip_id']),

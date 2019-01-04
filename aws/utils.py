@@ -9,12 +9,13 @@ import csv
 import io
 from datetime import datetime
 
+
 def get_live_data(url):
-    '''
+    """
     This function pulls data from a http endpoint and loads each row into a dict and adds it to a list.
     :param (string) url: http endpoint containing the data
     :return: a list of dictionaries
-    '''
+    """
 
     resp = requests.get(url)
     resp.raise_for_status()
@@ -27,7 +28,7 @@ def get_live_data(url):
     for station in live_data_list:
         station_dict = {}
         station_dict['station_id'] = station.get('id')
-        # dynamodb throw some weird error about floats, hence the casting below
+        # dynamodb throws some weird error about floats, hence the casting below
         station_dict['latitude'] = Decimal(str(station.get('latitude')))
         station_dict['longitude'] = Decimal(str(station.get('longitude')))
         station_dict['status'] = station.get('status')
@@ -42,26 +43,44 @@ def get_live_data(url):
     return station_data
 
 
-def put_item(table, dict_item):
-    '''
-    This function loads a single dictionary into dynamodb db.
-    :param (string) table:
-    :param (dict) dict_item:
+def chunks(l, n):
+    """
+    This function takes a list and creates lists the length of n. Wrap the call in a list to get a list of lists.
+    Credit to Chris Albon who gives credit to someone else, ah community.
+    ref: https://chrisalbon.com/python/data_wrangling/break_list_into_chunks_of_equal_size/
+    :param (list) l: list you want to split
+    :param (int) n: length of list returned
+    :return: a series of lists the length of n
+    """
+    # For item i in a range that is a length of l,
+    for i in range(0, len(l), n):
+        # Create an index range for l of n items:
+        yield l[i:i + n]
+
+
+def load_data(table, list_dict):
+    """
+    This function loads a list of dicts into dynamodb db.
+    :param (string) table: Name of table to load data
+    :param (dict) list_dict: A list of dicts
     :return: response from service
-    '''
+    """
     dynamodb = boto3.resource('dynamodb')
 
     table = dynamodb.Table(table)
-    response = table.put_item(Item=dict_item)
-    return response
+
+    with table.batch_writer() as batch:
+        for i in list_dict:
+            batch.put_item(Item=i)
+
 
 def files_from_zip(base_zipfile, reg_exp=None):
-    '''
+    """
     This function unzip an archive and create a dict for each row and adds it to a list
     :param (string) base_zipfile: a zipfile containing csv files
-    :param (string) reg_exp: optional regex experession
-    :return: A list of dictionaries  
-    '''
+    :param (string) reg_exp: optional regex expression
+    :return: A list of dictionaries
+    """
 
     with ZipFile(base_zipfile, 'r') as zip:
         files = zip.namelist()
@@ -89,10 +108,10 @@ def files_from_zip(base_zipfile, reg_exp=None):
 
 
 def create_table(**kwargs):
-    '''
+    """
     This is s simple function that creates a table in dynamodb.
     :param kwargs: table_name (string), partition_key (string)
-    '''
+    """
     dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
     print(f"Creating {kwargs['table_name']}...")
     try:

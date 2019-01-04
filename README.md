@@ -16,6 +16,13 @@ Data used through out this repo are pulled from two different spots.
 
 ### Overview
 
+I am on planning on 4 different projects. 
+
+* pentaho - complete
+* pandas - complete
+* aws - in progress
+* postgresql - not started
+
 I will include a readme in the individual projects. Although the general flow for each is illustrated below:
 
 ![data_flow](general_divvy_flow.png)

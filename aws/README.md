@@ -2,7 +2,14 @@
 
 TODO: Add a bunch of wording here :) 
 
-## Setup
+Part #1 - data loading (complete)
+Part #2 - reporting (not started)
+
+#### Data flow
+
+![aws_flow](aws/aws_viz.png) 
+
+#### Setup
 
 I used pipenv for this project. The following snippets can get this started
 

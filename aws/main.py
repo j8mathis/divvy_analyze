@@ -16,22 +16,22 @@ def main():
 
 
 def print_header():
-    print('-----------------------------')
-    print(' Divvy Analyze AWS Demo      ')
-    print('-----------------------------')
+    print('------------------------')
+    print(' Divvy Analyze AWS Demo ')
+    print('------------------------')
 
 
 def bulk_loader(table, list_dict):
-    '''
+    """
     This function is a wrapper for the put item function.
     :param (string) table:
     :param (list) list_dict:
-    '''
+    """
     for counter, i in enumerate(list_dict, 1):
-        r = utils.put_item(table, i)
-        if counter % 100 == 0:
+        utils.load_data(table, i)
+        if counter % 10 == 0:
             now = str(datetime.now().isoformat())
-            print(f"{now} - Items Loaded: {counter} Last StatusCode: {r['ResponseMetadata']['HTTPStatusCode']}")
+            print(f"{now} - Batches Loaded: {counter}")
 
     print(f'bulk load complete')
 
@@ -51,11 +51,13 @@ def run_event():
             mainly here for either new trip data or moving data into another location, table, etc
             '''
             trip_data = utils.files_from_zip("../data/Divvy_Trips_2016_Q3Q4.zip", "Divvy_Trips_.*Divvy_Trips.*csv$")
-            bulk_loader('TripData', trip_data)
+            trip_data_chunks = list(utils.chunks(trip_data, 50))
+            bulk_loader('TripData', trip_data_chunks)
         elif cmd == 'l':
             # this loads current data about the stations pulls from an http end point
             live_data = utils.get_live_data('https://feeds.divvybikes.com/stations/stations.json')
-            bulk_loader('StationData', live_data)
+            live_data_chunks = list(utils.chunks(live_data, 50))
+            bulk_loader('StationData', live_data_chunks)
         elif cmd == 'r':
             print('report coming right up')
         elif cmd != 'x' and cmd:
