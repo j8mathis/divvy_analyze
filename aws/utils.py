@@ -109,7 +109,7 @@ def files_from_zip(base_zipfile, reg_exp=None):
 
 def create_table(**kwargs):
     """
-    This is s simple function that creates a table in dynamodb.
+    This is a simple function that creates a table in dynamodb.
     :param kwargs: table_name (string), partition_key (string)
     """
     dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
