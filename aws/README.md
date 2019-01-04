@@ -7,7 +7,7 @@ Part #2 - reporting (not started)
 
 #### Data flow
 
-![aws_flow](aws/aws_viz.png) 
+![aws_flow](aws_viz.png) 
 
 #### Setup
 
