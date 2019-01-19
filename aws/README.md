@@ -21,4 +21,11 @@ pipenv shell #activate the pipenv shell
 ```
 
 
+### Notes to write about
+data loading was so sloooow - 10 batches (250) for 50 seconds 
+known issues with data weirdness
+slow count updates on table meta
+not joining
+not a good fit but was on the free tier
+
 

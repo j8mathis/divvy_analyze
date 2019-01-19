@@ -131,8 +131,8 @@ def create_table(**kwargs):
 
             ],
             ProvisionedThroughput={
-                'ReadCapacityUnits': 5,
-                'WriteCapacityUnits': 5
+                'ReadCapacityUnits': 10,
+                'WriteCapacityUnits': 10
             }
         )
 

@@ -7,7 +7,7 @@ def main():
     print_header()
     try:
         # not sure these need to be here but leaving for now
-        utils.create_table(table_name='TripData', partition_key='trip_id')
+        utils.create_table(table_name='TripDataSample', partition_key='trip_id')
         utils.create_table(table_name='StationData', partition_key='station_id')
         run_event()
     except EndpointConnectionError as e:
@@ -52,7 +52,8 @@ def run_event():
             '''
             trip_data = utils.files_from_zip("../data/Divvy_Trips_2016_Q3Q4.zip", "Divvy_Trips_.*Divvy_Trips.*csv$")
             trip_data_chunks = list(utils.chunks(trip_data, 50))
-            bulk_loader('TripData', trip_data_chunks)
+            bulk_loader('TripDataSample', trip_data_chunks[:300000])
+
         elif cmd == 'l':
             # this loads current data about the stations pulls from an http end point
             live_data = utils.get_live_data('https://feeds.divvybikes.com/stations/stations.json')
