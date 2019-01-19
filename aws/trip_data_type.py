@@ -6,6 +6,7 @@ class Trip:
     Trip data object used for creating dictionaries from CSV files. This is maybe overkill here. .
     I learned this in Michael Kennedy's awesome jumpstart course.
     ref: https://github.com/mikeckennedy/python-jumpstart-course-demos
+    *update 3.7 has data classes now and its less typing...I am in
     """
 
     def __init__(
