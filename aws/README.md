@@ -8,7 +8,7 @@ This example used dynamodb and a lambda function to give yet another example of 
 The data loading consisted of static data from compressed CSV files and live JSON data from a web endpoint. 
 ##### StationData
 
-The live station data was simple and straight forward although there are only 600 stations and hence only that many rows to load. There was one small issues noted below about data types. 
+The live station data was simple and straight forward although there are only 600 stations and hence only that many rows to load. There was one small issue noted below about data types. 
 
 ##### TripData
 
@@ -48,7 +48,7 @@ pipenv shell #activate the pipenv shell
 
 
 * First issue I hit was dynamodb throwing an error about a [float](https://github.com/j8mathis/divvy_analyze/blob/master/aws/utils.py#L31). The fix was a simple cast and the load continued. 
-* Next issue was, I can't [load an empty string](https://githu.com/j8mathis/divvy_analyze/blob/master/aws/utils.py#L101) into dynamodb. I was surprised by this error but was able to work around it.
+* Next issue was, I can't [load an empty string](https://github.com/j8mathis/divvy_analyze/blob/master/aws/utils.py#L101) into dynamodb. I was surprised by this error but was able to work around it.
 * I configured the tables with 5 and then 10 [provisionedthroughputs](https://github.com/j8mathis/divvy_analyze/blob/master/aws/utils.py#L134). I can't tell you how many times I received the "ProvisionedThroughputExceededException" error. The lambda calls hit this limitation the most. I suppose you could try throttling them, using a similar [chunking](https://github.com/j8mathis/divvy_analyze/blob/master/aws/utils.py#L46) method from the loading part. 
 
 
