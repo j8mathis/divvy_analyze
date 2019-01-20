@@ -16,7 +16,7 @@ The trip data is much more but by no means large. Its static and pulled from com
  
 #### Part 2 - reporting
 
-Dynamodb does not support joining, it doesnt have an aggregate framework, it cannot be queried on the anything beside the primary key, unless an secondary index exists. You need to model your data to fit these restrictions in order to reap the benefits of dynamodb. Although for this example I did not change the model and used it as it. The data is structured and relational. In order to do an aggregations I created a lambda function to process data in a streaming fashion as the live station data is loaded into the system. The results were loaded into another table for easy reporting.
+Dynamodb does not support joining, it doesnt have an aggregate framework, it cannot be queried on the anything beside the primary key, unless an secondary index exists. You need to model your data to fit these restrictions in order to reap the benefits of dynamodb. Although for this example I did not change the model and used it as is. The data is structured and relational. In order to do an aggregations I created a lambda function to process data in a streaming fashion as the live station data is loaded into the system. The results were loaded into another table for easy reporting.
 
 
 #### Data flow
