@@ -23,4 +23,4 @@ The options, connectors, and tools seem endless. There are connectors to a wide 
 
 
 ### Use cases
-Pentaho has a large community although it doesn't have the base of other popular coding languages. Cross functional teams would benefit the most from this type of tool. If your day to day tasks change quite a bit and you only occasional use code for data analysis pentaho can be a great fit for you and your team. Transformations and jobs can be scheduled from the commandline for easy automation.
+Pentaho has a large community although it doesn't have the base of other popular coding languages. Cross functional teams would benefit the most from this type of tool. If your day to day tasks change quite a bit and you only occasionally use code for data analysis, pentaho can be a great fit for you and your team. 
