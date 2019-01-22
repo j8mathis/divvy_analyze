@@ -1,6 +1,6 @@
 ### Divvy Analyze
 
-This was an experimental learning experience. I really enjoyed this approach. It was quick, fairly easy, and no other infrastructure was needed. Just run the code and you get your answer. Compare this to waiting days for data loading into a database instead of getting the answer right away was a huge win. Overall a very useful tool, I can see why pandas and numpys are so popular and I could get use to using them all the time.
+This was an experimental learning experience. I really enjoyed this approach. It was quick, easy, and no other infrastructure was needed. Just run the code and you get your answer. Compare this to waiting days for data loading into a database instead of getting the answer right away was a huge win. Overall a very useful tool, I can see why pandas and numpys are so popular and I could get use to using them all the time.
 
 ### What
 
