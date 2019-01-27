@@ -58,7 +58,6 @@ class pgConnection(object):
         :param (string) link: a github "raw" link
         :return text:
         """
-        git query text from github raw link
         query = requests.get(link)
         sql = query.text
         return sql
