@@ -12,6 +12,20 @@ def print_header():
     print('-----------------------------')
 
 
+def run_report(conn_obj, name, url):
+    url = \
+        'https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/busiest_hours.sql'
+    query = conn_obj.get_text_link(url)
+    cur = conn_obj.execute(query)
+    results = cur.fetchall()
+    print("--------------")
+    print(f"{name} Report")
+    print("--------------")
+    for i in results:
+        print(i)
+    cur.close()
+
+
 def run_event():
     print('What do you want to do?')
     cmd = 'EMPTY'
@@ -32,7 +46,16 @@ def run_event():
                         %(available_docks)s, %(total_docks)s, %(available_bikes)s, %(load_datetime)s );
                         """, i)
         elif cmd == 'r':
-            print('report coming right up')
+            hour_url = \
+                'https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/busiest_hours.sql'
+            run_report(d, "Busiest Hour", hour_url)
+            st_url = \
+                'https://github.com/j8mathis/divvy_analyze/blob/master/postgres/queries/busiest_stations.sql'
+            run_report(d, "Busiest Station", st_url)
+            dur_url = \
+                'https://github.com/j8mathis/divvy_analyze/blob/master/postgres/queries/duration.sql'
+            run_report(d, "Duration", dur_url)
+
         elif cmd != 'x' and cmd:
             print(f"Sorry, we don't understand '{cmd}'.")
 

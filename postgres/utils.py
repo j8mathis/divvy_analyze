@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 
 def get_live_data(url):
@@ -56,7 +57,7 @@ class pgConnection(object):
         return sql
 
     def execute(self, sql, parameters=None):
-        cur = self.conn.cursor()
+        cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
         cur.execute(sql, parameters)
 
