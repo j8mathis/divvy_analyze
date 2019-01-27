@@ -1,12 +1,12 @@
 ### Divvy Analyze Postgres
 
-This example uses the divvy dataset with postgresql. I stay basic but set up a good foundation to be be built on. 
+This example uses the divvy dataset with postgresql, it stays basic but sets up a good foundation to be built on. 
 
 ### Setup
 
 #### Postgres Docker
 
-I used a docker image for postgres db in this example. It was simple and met all my needs. Below are steps to get it up and running. You will need to have docker installed; [instructions here.](https://docs.docker.com/install/)
+I used a docker image for postgres db in this example. It was simple and met all my needs. Below are the steps to get it up and running. You will need to have docker installed; [instructions here.](https://docs.docker.com/install/)
 
 Pull postgres image
 
