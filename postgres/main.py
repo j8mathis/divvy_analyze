@@ -48,7 +48,7 @@ def run_event():
                         """, i)
         elif cmd == 'r':
             with open('queries.yaml', 'rb') as ymlfile:
-                cfg = yaml.load(ymlfile)
+                cfg = yaml.safe_load(ymlfile)
             queries = list(cfg.keys())
 
             for q in queries:
