@@ -1,4 +1,5 @@
 import utils
+import yaml
 
 
 def main():
@@ -13,8 +14,6 @@ def print_header():
 
 
 def run_report(conn_obj, name, url):
-    url = \
-        'https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/busiest_hours.sql'
     query = conn_obj.get_text_link(url)
     cur = conn_obj.execute(query)
     results = cur.fetchall()
@@ -23,6 +22,7 @@ def run_report(conn_obj, name, url):
     print("--------------")
     for i in results:
         print(i)
+    print()
     cur.close()
 
 
@@ -36,6 +36,7 @@ def run_event():
         cmd = cmd.lower().strip()
 
         if cmd == 'l':
+            """ This is a complete dump and reload of live station data """
             live_data = utils.get_live_data('https://feeds.divvybikes.com/stations/stations.json')
             d.execute("truncate station_data;")
             for i in live_data:
@@ -46,15 +47,14 @@ def run_event():
                         %(available_docks)s, %(total_docks)s, %(available_bikes)s, %(load_datetime)s );
                         """, i)
         elif cmd == 'r':
-            hour_url = \
-                'https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/busiest_hours.sql'
-            run_report(d, "Busiest Hour", hour_url)
-            st_url = \
-                'https://github.com/j8mathis/divvy_analyze/blob/master/postgres/queries/busiest_stations.sql'
-            run_report(d, "Busiest Station", st_url)
-            dur_url = \
-                'https://github.com/j8mathis/divvy_analyze/blob/master/postgres/queries/duration.sql'
-            run_report(d, "Duration", dur_url)
+            with open('queries.yaml', 'rb') as ymlfile:
+                cfg = yaml.load(ymlfile)
+            queries = list(cfg.keys())
+
+            for q in queries:
+                url = cfg[q]["query"]
+                name = cfg[q]["name"]
+                run_report(d, name, url)
 
         elif cmd != 'x' and cmd:
             print(f"Sorry, we don't understand '{cmd}'.")

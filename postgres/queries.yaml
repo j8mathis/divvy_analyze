@@ -1,0 +1,10 @@
+#use github raw links 
+hour:
+  query: "https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/busiest_hours.sql"
+  name: "Busiest Hour"
+station:
+  query: "https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/busiest_stations.sql"
+  name: "Busiest Station"
+duration:
+  query: "https://raw.githubusercontent.com/j8mathis/divvy_analyze/master/postgres/queries/duration.sql"
+  name: "Duration" 

@@ -47,4 +47,4 @@ from
  order by 
      from_count desc,
      to_count desc
-limit 10; 
+limit 5; 

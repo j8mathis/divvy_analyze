@@ -33,14 +33,11 @@ def get_live_data(url):
 
 class pgConnection(object):
     """
-    something here
+    This class creates a connection to a postgres database. The credentials should be stored in a secured location,
+    such as a secret vault. For example they are not.
     """
 
     def __init__(self):
-        """
-        database connection
-        """
-
         self.cstring = "host=localhost dbname=divvy_analyze user=postgres"
 
         self.conn = psycopg2.connect(self.cstring)
@@ -50,22 +47,30 @@ class pgConnection(object):
 
         return
 
-    def get_text_link(self, link):
-        # git query text from github raw link
+    def __repr__(self):
+        return (f'{self.__class__.__name__}('
+                f'{self.conn!r}')
+
+    @staticmethod
+    def get_text_link(link):
+        """
+        This function takes an url and returns the text
+        :param (string) link: a github "raw" link
+        :return text:
+        """
+        git query text from github raw link
         query = requests.get(link)
         sql = query.text
         return sql
 
     def execute(self, sql, parameters=None):
+        """
+        :param (string) sql: text from the get_text_link method
+        :param parameters: dict values for placeholders
+        :return cursor: open cursor, fetch and close
+        """
         cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
         cur.execute(sql, parameters)
 
         return cur
-
-    def cleanup(self):
-        # don't think I will use this
-        self.cur.close()
-        self.conn.close()
-
-        return
