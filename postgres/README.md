@@ -22,7 +22,7 @@ docker run --rm --name pg-docker -e POSTGRES_PASSWORD=pypgdemo -d -p 5432:5432 p
 
 The "--rm" automatically removes the container when it exits. "--name" assigns a name to the container. "-e" sets an environment variable. "-d" runs the container detached in the background. "-p" forwards the port. 
 
-Optionally you can also set a persistent volume with an option like this
+Optionally you can also set a persistent volume with an option like this. The first directory needs to exist on your box.
 
 ```bash
 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data
