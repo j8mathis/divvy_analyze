@@ -84,9 +84,9 @@ With the data neatly structured into tables, reporting was too easy. It was just
 
 
 #### issues
-* Yaml - After I uploaded my initial commit I immediately got an email from github (thanks btw) about a security venerability in the version of pyyaml I was using. This lead to a lengthy history of web searches. Long story short the load() function could easily be exploited to run arbitrary code. Its getting fixed in the near future but you can also just use another funtion called safe_load().
+* PyYaml security - After I uploaded my initial commit I immediately got an email from github (thanks btw) about a security venerability in the version of pyyaml I was using. This lead to a lengthy history of web searches. Long story short the load() function could easily be exploited to run arbitrary code. Its getting fixed in the near future but you can also just use another funtion called safe_load().
 
-* PyYaml is dead - There is some discussion online about this project being dead. There is this [fork](https://yaml.readthedocs.io/en/latest/overview.html), I don't know. Sticking with PyYaml for now since my needs are light. 
+* PyYaml is dead - There are discussions online about this project being dead. There is a new [fork](https://yaml.readthedocs.io/en/latest/overview.html), that people online are encouraging. Sticking with PyYaml for now since my needs are light but keeping options open for future needs. 
 
 * Persistent storage for postgres docker - I initially tried this but the database got hung up quickly. Didn't investigate far but was probably due to the fact of it running on a laptop and not getting clean shutdowns. With data loads at about 30 seconds I didn't need this anyways. 
 
