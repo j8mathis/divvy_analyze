@@ -86,6 +86,8 @@ With the data neatly structured into tables, reporting was too easy. It was just
 #### issues
 * Yaml - After I uploaded my initial commit I immediately got an email from github (thanks btw) about a security venerability in the version of pyyaml I was using. This lead to a lengthy history of web searches. Long story short the load() function could easily be exploited to run arbitrary code. Its getting fixed in the near future but you can also just use another funtion called safe_load().
 
+* PyYaml is dead - There is some discussion online about this project being dead. There is this [fork](https://yaml.readthedocs.io/en/latest/overview.html), I don't know. Sticking with PyYaml for now since my needs are light. 
+
 * Persistent storage for postgres docker - I initially tried this but the database got hung up quickly. Didn't investigate far but was probably due to the fact of it running on a laptop and not getting clean shutdowns. With data loads at about 30 seconds I didn't need this anyways. 
 
 * JSON loading - I spent a fair amount of time trying to find good bulking loading method for this. I only had 600 rows so performance was not a concern, although the single inserts I imagine would get to be slow at scale.  I though about keeping the data in json and transforming the data inside the database. This could also open the possibility of collecting historical data for the stations on a daily or smaller increment. 
