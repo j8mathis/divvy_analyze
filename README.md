@@ -21,7 +21,7 @@ I am on planning on 4 different projects.
 * pentaho - complete
 * pandas - complete
 * aws - complete
-* postgresql - not started
+* postgresql - in progress
 
 I will include a readme in the individual projects. Although the general flow for each is illustrated below:
 
