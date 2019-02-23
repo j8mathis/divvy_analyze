@@ -79,7 +79,7 @@ After the CSV files were loaded I moved on to the station data. I researched a f
 
 #### data reporting
 
-With the data neatly structured into tables, reporting was too easy. It was just a matter of running some sql queries. I didn't dig very deep into the queries, but the potential is there. I used a combination of psycopg and yaml files to run the reports. I like this approach because you can setup different attributes on the queries like name, description, etc. Also you can use different yaml files to run different sets of reports. Finally and more importantly you change the queries without touching the code. Which is nice for making tweaks on the reports. How many times does this happen in a workplace:) The foundation can really be built up from this point. 
+With the data neatly structured into tables, reporting was too easy. It was just a matter of running some sql queries. I didn't dig very deep into the queries, but the potential is there. I used a combination of psycopg and yaml files to run the reports. I like this approach because you can setup different attributes on the queries like name, description, etc. Also you can use different yaml files to run different sets of reports. Finally and more importantly you can change the queries without touching the code. Which is nice for making tweaks on the reports. How many times does this happen in a workplace:) The foundation can really be built up from this point. 
 
 
 
