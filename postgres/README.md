@@ -74,7 +74,7 @@ pip install -r requirements.txt
 
 The data loading in this project was a snap. I decided to write a [bash script](https://github.com/j8mathis/divvy_analyze/blob/master/postgres/setup.sh) to use postgres' copy tools to move data from CSV to database table even though psycopg supported this functionality. The bash script did everything I needed it to in less than 40 lines. Create a database, tables, load data and even removed duplicates. Very nice and simple. It also did it in about 30 seconds. Compare that to a 4-5 day load into dynamodb and this database was moving at the speed of light. 
 
-After the CSV files were loaded I moved on to the station data. I researched a few different ways to load this data. Load it into a jsonb column? Some kind of bulk load? Since its only 600 rows I decided to use psycopg ability to running an insert with named parameters. I could simply pass in a dict to a insert. [beautiful](https://github.com/j8mathis/divvy_analyze/blob/master/postgres/main.py#L42-L48). Loading the station data was no problem after that. 
+After the CSV files were loaded I moved on to the station data. I researched a few different ways to load this data. Load it into a jsonb column? Some kind of bulk load? Since its only 600 rows I decided to use psycopg ability to running an insert with named parameters. I could simply pass in a [dict to a insert](https://github.com/j8mathis/divvy_analyze/blob/master/postgres/main.py#L42-L48). beautiful. Loading the station data was no problem after that. 
 
 
 #### data reporting
